@@ -1,2 +1,6 @@
-Москва:19 июля;Pipl Bar;https://tickets.ru/moscow;https://vk.com/moscow_event
-Санкт-Петербург;25 июля;Ленинград Центр;https://tickets.ru/spb;https://vk.com/spb_event
+Москва:19 июля:Pipl Bar
+Санкт-Петербург:25 июля:Ленинград Центр
+Казань:30 июля:Pyramida Club
+Екатеринбург:5 августа:Tele-Club
+Новосибирск:12 августа:Rock City
+Краснодар:18 августа:Hall
