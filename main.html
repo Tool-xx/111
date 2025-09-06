@@ -1,300 +1,170 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>События</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #0c0c0c, #1a1a1a, #000000);
-            color: white;
-            font-family: 'Arial', sans-serif;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .banner-container {
-            width: 100%;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .banner {
-            max-width: 60%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin-bottom: 50px;
-        }
-        
-        .event-block {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .event-block:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-        }
-        
-        .event-city {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-        
-        .event-date {
-            font-size: 16px;
-            color: #ccc;
-            margin-bottom: 5px;
-        }
-        
-        .event-place {
-            font-size: 18px;
-            color: #ddd;
-            margin-bottom: 15px;
-        }
-        
-        .buttons {
-            display: flex;
-            gap: 12px;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .btn-tickets {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
-        }
-        
-        .btn-tickets:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-        }
-        
-        .btn-vk {
-            background: linear-gradient(45deg, #4a76a8, #5b88bd);
-            color: white;
-            gap: 6px;
-        }
-        
-        .btn-vk:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 118, 168, 0.4);
-        }
-        
-        .vk-logo {
-            width: 18px;
-            height: 18px;
-            filter: brightness(0) invert(1);
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 25px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .footer-logo {
-            width: 90px;
-            height: 45px;
-            object-fit: contain;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-        
-        .footer-logo:hover {
-            opacity: 0.8;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 30px;
-            font-size: 18px;
-            color: #ccc;
-        }
-        
-        .debug-info {
-            background: rgba(255, 0, 0, 0.1);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border-left: 4px solid #ff6b6b;
-        }
-        
-        @media (max-width: 768px) {
-            .events-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .buttons {
-                flex-direction: column;
-            }
-            
-            .banner {
-                max-width: 85%;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Афиша мероприятий</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0c0c0c, #1a1a1a, #000000);
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .banner {
+      width: 100%;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+
+    .banner img {
+      width: 100%;
+      border-radius: 16px;
+    }
+
+    .events {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 30px auto;
+    }
+
+    .event {
+      background: #1a1a1a;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .event:hover {
+      transform: translateY(-5px);
+    }
+
+    .event h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .event p {
+      margin: 5px 0;
+      font-size: 16px;
+      color: #ccc;
+    }
+
+    .buttons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .btn-tickets {
+      background: #e63946;
+      color: #fff;
+    }
+
+    .btn-tickets:hover {
+      background: #ff4d5a;
+    }
+
+    .btn-vk {
+      background: #4c75a3;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-vk:hover {
+      background: #5a86b8;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 20px;
+    }
+
+    footer a img {
+      width: 80px;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    footer a img:hover {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="banner-container">
-            <img src="banner.png" alt="Мероприятие" class="banner" id="banner">
-        </div>
-        
-        <div class="events-grid" id="eventsGrid">
-            <div class="loading">Загрузка событий...</div>
-        </div>
-        
-        <div class="debug-info" id="debugInfo" style="display: none;">
-            <h3>Информация для отладки</h3>
-            <p>Если файл infopad.txt не загружается, вы можете:</p>
-            <ol>
-                <li>Проверить, что файл существует по адресу: <span id="fileUrl"></span></li>
-                <li>Убедиться, что файл имеет правильный формат: Город;Дата;Место;ссылка_билеты;ссылка_vk</li>
-                <li>Или вставить данные прямо в код JavaScript (см. комментарии в коде)</li>
-            </ol>
-        </div>
-    </div>
+  <div class="banner">
+    <img src="banner.png" alt="Баннер мероприятия">
+  </div>
 
-    <footer class="footer">
-        <a href="https://t.me/bboking812" target="_blank">
-            <img src="812booking.png" alt="812booking" class="footer-logo">
-        </a>
-    </footer>
+  <div class="events" id="events-container">
+    <!-- Сюда вставятся блоки из infopad.txt -->
+  </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const FILE_URL = 'https://raw.githubusercontent.com/Tool-xx/111/main/infopad.txt';
-            document.getElementById('fileUrl').textContent = FILE_URL;
-            
-            // Резервные данные на случай, если файл не доступен
-            const FALLBACK_DATA = `
-Москва;19 июля;Pipl Bar;https://tickets.ru/moscow;https://vk.com/moscow_event
-Санкт-Петербург;25 июля;Ленинград Центр;https://tickets.ru/spb;https://vk.com/spb_event
-Казань;30 июля;Pyramida Club;https://tickets.ru/kazan;https://vk.com/kazan_event
-Екатеринбург;5 августа;Tele-Club;https://tickets.ru/ekb;https://vk.com/ekb_event
-Новосибирск;12 августа;Rock City;https://tickets.ru/novosibirsk;https://vk.com/novosibirsk_event
-Краснодар;18 августа;Hall;https://tickets.ru/krasnodar;https://vk.com/krasnodar_event
-            `.trim();
-            
-            // Попытка загрузки данных из файла
-            fetch(FILE_URL)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Ошибка HTTP: ${response.status}`);
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    processData(data, 'Файл infopad.txt');
-                })
-                .catch(error => {
-                    console.warn('Не удалось загрузить файл, используем резервные данные:', error);
-                    document.getElementById('debugInfo').style.display = 'block';
-                    processData(FALLBACK_DATA, 'резервные данные');
-                });
-                
-            function processData(data, source) {
-                try {
-                    const eventsGrid = document.getElementById('eventsGrid');
-                    const events = data.split('\n')
-                        .filter(line => line.trim() !== '')
-                        .filter(line => line.includes(';'));
-                    
-                    console.log(`Загружено из ${source}:`, events);
-                    
-                    if (events.length === 0) {
-                        throw new Error('Нет данных событий');
-                    }
-                    
-                    eventsGrid.innerHTML = '';
-                    
-                    events.forEach((event, index) => {
-                        const parts = event.split(';');
-                        if (parts.length >= 5) {
-                            const city = parts[0] || 'Город';
-                            const date = parts[1] || 'Дата';
-                            const place = parts[2] || 'Место';
-                            const ticketLink = parts[3] || '#';
-                            const vkLink = parts[4] || '#';
-                            
-                            const eventBlock = document.createElement('div');
-                            eventBlock.className = 'event-block';
-                            
-                            eventBlock.innerHTML = `
-                                <div class="event-city">${city.trim()}</div>
-                                <div class="event-date">${date.trim()}</div>
-                                <div class="event-place">${place.trim()}</div>
-                                <div class="buttons">
-                                    <a href="${ticketLink.trim()}" target="_blank" class="btn btn-tickets">Билеты</a>
-                                    <a href="${vkLink.trim()}" target="_blank" class="btn btn-vk">
-                                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNNDU2LjgsOTYtNDMuMiw0MDMuMWMtMjAuOCwwLTM4LjQtMTcuNi0zOC40LTM4LjRWMTQ3LjNDMzc1LjIsMTI2LjUsMzkyLjgsMTA5LDQxMy42LDEwOWgyODIuNGMyMC44LDAsMzguNCwxNy42LDM4LjQsMzguNHYyMTcuNEM3MzUuMiwzODUuNSw3MTcuNiw0MDMsNjk2LjgsNDAzSDU4NS43bC0xNi4xLTQ3LjRoLTUuNGMwLDEzLjMsMCwzMS44LDAsMzEuOGwtMjUuNiw3OC42aC00Ni45bC0xNC43LTQxLjljLTguOS0yNS4yLTE3LjgtNTAuNC0yNi43LTc1LjZINTEydjQxLjljMCwxMC45LTguOSwxOS44LTE5LjgsMTkuOEg0MzkuM0w0NTYuOCw5NnogTTUxMiwyMjUuNmMwLDUuNC00LjQsOS44LTkuOCw5LjhINDc3Yy01LjQsMC05LjgtNC40LTkuOC05LjhWMTMxLjljMC01LjQsNC40LTkuOCw5LjgtOS44aDI1LjJjNS40LDAsOS44LDQuNCw5LjgsOS44VjIyNS42eiIvPjwvc3ZnPg==" alt="VK" class="vk-logo">
-                                        VK
-                                    </a>
-                                </div>
-                            `;
-                            
-                            eventsGrid.appendChild(eventBlock);
-                        } else {
-                            console.warn('Пропущена строка с неправильным форматом:', event);
-                        }
-                    });
-                    
-                } catch (error) {
-                    console.error('Ошибка обработки данных:', error);
-                    showError('Ошибка обработки данных: ' + error.message);
-                }
-            }
-                
-            function showError(message) {
-                const eventsGrid = document.getElementById('eventsGrid');
-                eventsGrid.innerHTML = `
-                    <div class="event-block">
-                        <div class="event-city">Ошибка загрузки</div>
-                        <div class="event-date">${message}</div>
-                        <div class="event-place">Формат данных: Город;Дата;Место;ссылка_билеты;ссылка_vk</div>
-                        <div class="event-place">Проверьте файл infopad.txt в репозитории</div>
-                    </div>
-                `;
-            }
-        });
-    </script>
+  <footer>
+    <a href="https://t.me/bboking812" target="_blank">
+      <img src="812booking.png" alt="812booking">
+    </a>
+  </footer>
+
+  <script>
+    async function loadEvents() {
+      const response = await fetch('infopad.txt');
+      const text = await response.text();
+      const lines = text.split('\n').map(line => line.trim()).filter(line => line);
+
+      const container = document.getElementById('events-container');
+
+      lines.forEach(line => {
+        const [city, date, place] = line.split(':');
+        if (city && date && place) {
+          const block = document.createElement('div');
+          block.classList.add('event');
+
+          block.innerHTML = `
+            <h2>${city}</h2>
+            <p>${date}</p>
+            <p>${place}</p>
+            <div class="buttons">
+              <a href="https://test.ru" target="_blank" class="btn btn-tickets">Билеты</a>
+              <a href="https://test.ru" target="_blank" class="btn btn-vk">VK</a>
+            </div>
+          `;
+
+          container.appendChild(block);
+        }
+      });
+    }
+
+    loadEvents();
+  </script>
 </body>
 </html>
