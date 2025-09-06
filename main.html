@@ -177,6 +177,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Загрузка данных из файла infopad.txt на GitHub Pages
+            // ЗАМЕНИТЕ ССЫЛКУ НА АКТУАЛЬНУЮ ДЛЯ ВАШЕГО РЕПОЗИТОРИЯ
             fetch('https://raw.githubusercontent.com/ваш-username/ваш-репозиторий/main/infopad.txt')
                 .then(response => {
                     if (!response.ok) {
@@ -189,7 +190,7 @@
                         const eventsGrid = document.getElementById('eventsGrid');
                         const events = data.split('\n')
                             .filter(line => line.trim() !== '')
-                            .filter(line => line.includes(':'));
+                            .filter(line => line.includes(';'));
                         
                         if (events.length === 0) {
                             throw new Error('Нет данных событий в файле');
@@ -198,7 +199,7 @@
                         eventsGrid.innerHTML = '';
                         
                         events.forEach(event => {
-                            const parts = event.split(':');
+                            const parts = event.split(';');
                             if (parts.length >= 5) {
                                 const city = parts[0] || 'Город';
                                 const date = parts[1] || 'Дата';
@@ -233,7 +234,7 @@
                 })
                 .catch(error => {
                     console.error('Ошибка загрузки файла:', error);
-                    showError('Не удалось загрузить данные. Проверьте наличие файла infopad.txt в репозитории.');
+                    showError('Не удалось загрузить данные. Проверьте наличие файла infopad.txt в репозитории и URL в коде.');
                 });
                 
             function showError(message) {
@@ -242,7 +243,8 @@
                     <div class="event-block">
                         <div class="event-city">Ошибка загрузки</div>
                         <div class="event-date">${message}</div>
-                        <div class="event-place">Формат данных: Город:Дата:Место:ссылка_билеты:ссылка_vk</div>
+                        <div class="event-place">Формат данных: Город;Дата;Место;ссылка_билеты;ссылка_vk</div>
+                        <div class="event-place">Убедитесь, что в коде указан правильный URL к вашему файлу на GitHub</div>
                     </div>
                 `;
             }
