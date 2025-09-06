@@ -32,9 +32,10 @@
         }
         
         .banner {
-            max-width: 70%;
+            max-width: 60%;
             height: auto;
-            border-radius: 12px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
         .events-grid {
@@ -50,6 +51,12 @@
             border-radius: 10px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .event-block:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
         }
         
         .event-city {
@@ -97,7 +104,7 @@
         
         .btn-tickets:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
         
         .btn-vk {
@@ -108,7 +115,7 @@
         
         .btn-vk:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 118, 168, 0.3);
+            box-shadow: 0 5px 15px rgba(74, 118, 168, 0.4);
         }
         
         .vk-logo {
@@ -152,7 +159,7 @@
             }
             
             .banner {
-                max-width: 90%;
+                max-width: 85%;
             }
         }
     </style>
@@ -177,8 +184,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Загрузка данных из файла infopad.txt на GitHub Pages
-            // ЗАМЕНИТЕ ССЫЛКУ НА АКТУАЛЬНУЮ ДЛЯ ВАШЕГО РЕПОЗИТОРИЯ
-            fetch('https://raw.githubusercontent.com/ваш-username/ваш-репозиторий/main/infopad.txt')
+            // Используем raw.githubusercontent.com для доступа к сырому файлу
+            fetch('https://raw.githubusercontent.com/Tool-xx/111/main/infopad.txt')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Файл не найден');
@@ -234,7 +241,7 @@
                 })
                 .catch(error => {
                     console.error('Ошибка загрузки файла:', error);
-                    showError('Не удалось загрузить данные. Проверьте наличие файла infopad.txt в репозитории и URL в коде.');
+                    showError('Не удалось загрузить данные. Проверьте наличие файла infopad.txt в репозитории.');
                 });
                 
             function showError(message) {
@@ -244,7 +251,6 @@
                         <div class="event-city">Ошибка загрузки</div>
                         <div class="event-date">${message}</div>
                         <div class="event-place">Формат данных: Город;Дата;Место;ссылка_билеты;ссылка_vk</div>
-                        <div class="event-place">Убедитесь, что в коде указан правильный URL к вашему файлу на GitHub</div>
                     </div>
                 `;
             }
