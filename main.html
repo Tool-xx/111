@@ -26,61 +26,61 @@
         
         .banner-container {
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: center;
         }
         
         .banner {
-            max-width: 80%;
+            max-width: 70%;
             height: auto;
-            border-radius: 15px;
+            border-radius: 12px;
         }
         
         .events-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 60px;
+            gap: 25px;
+            margin-bottom: 50px;
         }
         
         .event-block {
             background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 10px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .event-city {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #fff;
         }
         
         .event-date {
-            font-size: 18px;
+            font-size: 16px;
             color: #ccc;
             margin-bottom: 5px;
         }
         
         .event-place {
-            font-size: 20px;
+            font-size: 18px;
             color: #ddd;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .buttons {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
         
         .btn {
-            padding: 12px 25px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -103,7 +103,7 @@
         .btn-vk {
             background: linear-gradient(45deg, #4a76a8, #5b88bd);
             color: white;
-            gap: 8px;
+            gap: 6px;
         }
         
         .btn-vk:hover {
@@ -112,20 +112,20 @@
         }
         
         .vk-logo {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             filter: brightness(0) invert(1);
         }
         
         .footer {
             text-align: center;
-            padding: 30px 0;
+            padding: 25px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .footer-logo {
-            width: 100px;
-            height: 50px;
+            width: 90px;
+            height: 45px;
             object-fit: contain;
             cursor: pointer;
             transition: opacity 0.3s ease;
@@ -133,6 +133,13 @@
         
         .footer-logo:hover {
             opacity: 0.8;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 30px;
+            font-size: 18px;
+            color: #ccc;
         }
         
         @media (max-width: 768px) {
@@ -145,7 +152,7 @@
             }
             
             .banner {
-                max-width: 95%;
+                max-width: 90%;
             }
         }
     </style>
@@ -157,7 +164,7 @@
         </div>
         
         <div class="events-grid" id="eventsGrid">
-            <!-- Блоки событий будут добавлены через JavaScript -->
+            <div class="loading">Загрузка событий...</div>
         </div>
     </div>
 
@@ -169,8 +176,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Загрузка данных из файла infopad.txt
-            fetch('infopad.txt')
+            // Загрузка данных из файла infopad.txt на GitHub Pages
+            fetch('https://raw.githubusercontent.com/ваш-username/ваш-репозиторий/main/infopad.txt')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Файл не найден');
@@ -185,62 +192,57 @@
                             .filter(line => line.includes(':'));
                         
                         if (events.length === 0) {
-                            throw new Error('Нет данных событий');
+                            throw new Error('Нет данных событий в файле');
                         }
                         
                         eventsGrid.innerHTML = '';
                         
                         events.forEach(event => {
                             const parts = event.split(':');
-                            const city = parts[0] || 'Город';
-                            const date = parts[1] || 'Дата';
-                            const place = parts[2] || 'Место';
-                            const ticketLink = parts[3] || '#';
-                            const vkLink = parts[4] || '#';
-                            
-                            const eventBlock = document.createElement('div');
-                            eventBlock.className = 'event-block';
-                            
-                            eventBlock.innerHTML = `
-                                <div class="event-city">${city.trim()}</div>
-                                <div class="event-date">${date.trim()}</div>
-                                <div class="event-place">${place.trim()}</div>
-                                <div class="buttons">
-                                    <a href="${ticketLink}" target="_blank" class="btn btn-tickets">Билеты</a>
-                                    <a href="${vkLink}" target="_blank" class="btn btn-vk">
-                                        <img src="vk-logo.png" alt="VK" class="vk-logo">
-                                        VK
-                                    </a>
-                                </div>
-                            `;
-                            
-                            eventsGrid.appendChild(eventBlock);
+                            if (parts.length >= 5) {
+                                const city = parts[0] || 'Город';
+                                const date = parts[1] || 'Дата';
+                                const place = parts[2] || 'Место';
+                                const ticketLink = parts[3] || '#';
+                                const vkLink = parts[4] || '#';
+                                
+                                const eventBlock = document.createElement('div');
+                                eventBlock.className = 'event-block';
+                                
+                                eventBlock.innerHTML = `
+                                    <div class="event-city">${city.trim()}</div>
+                                    <div class="event-date">${date.trim()}</div>
+                                    <div class="event-place">${place.trim()}</div>
+                                    <div class="buttons">
+                                        <a href="${ticketLink.trim()}" target="_blank" class="btn btn-tickets">Билеты</a>
+                                        <a href="${vkLink.trim()}" target="_blank" class="btn btn-vk">
+                                            <img src="vk-logo.png" alt="VK" class="vk-logo">
+                                            VK
+                                        </a>
+                                    </div>
+                                `;
+                                
+                                eventsGrid.appendChild(eventBlock);
+                            }
                         });
                         
                     } catch (error) {
                         console.error('Ошибка обработки данных:', error);
-                        showError();
+                        showError('Ошибка обработки данных: ' + error.message);
                     }
                 })
                 .catch(error => {
                     console.error('Ошибка загрузки файла:', error);
-                    showError();
+                    showError('Не удалось загрузить данные. Проверьте наличие файла infopad.txt в репозитории.');
                 });
                 
-            function showError() {
+            function showError(message) {
                 const eventsGrid = document.getElementById('eventsGrid');
                 eventsGrid.innerHTML = `
                     <div class="event-block">
                         <div class="event-city">Ошибка загрузки</div>
-                        <div class="event-date">Не удалось загрузить данные событий</div>
-                        <div class="event-place">Проверьте наличие файла infopad.txt</div>
-                        <div class="buttons">
-                            <a href="#" class="btn btn-tickets">Билеты</a>
-                            <a href="#" class="btn btn-vk">
-                                <img src="vk-logo.png" alt="VK" class="vk-logo">
-                                VK
-                            </a>
-                        </div>
+                        <div class="event-date">${message}</div>
+                        <div class="event-place">Формат данных: Город:Дата:Место:ссылка_билеты:ссылка_vk</div>
                     </div>
                 `;
             }
