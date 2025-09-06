@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>События</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c0c, #1a1a1a, #000000);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .banner-container {
+            width: 100%;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .banner {
+            max-width: 80%;
+            height: auto;
+            border-radius: 15px;
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .event-block {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .event-city {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .event-date {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 5px;
+        }
+        
+        .event-place {
+            font-size: 20px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-tickets {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+        
+        .btn-tickets:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn-vk {
+            background: linear-gradient(45deg, #4a76a8, #5b88bd);
+            color: white;
+            gap: 8px;
+        }
+        
+        .btn-vk:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 118, 168, 0.3);
+        }
+        
+        .vk-logo {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-logo {
+            width: 100px;
+            height: 50px;
+            object-fit: contain;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer-logo:hover {
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .banner {
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="banner-container">
+            <img src="banner.png" alt="Мероприятие" class="banner" id="banner">
+        </div>
+        
+        <div class="events-grid" id="eventsGrid">
+            <!-- Блоки событий будут добавлены через JavaScript -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        <a href="https://t.me/bboking812" target="_blank">
+            <img src="812booking.png" alt="812booking" class="footer-logo">
+        </a>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загрузка данных из файла infopad.txt
+            fetch('infopad.txt')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Файл не найден');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    try {
+                        const eventsGrid = document.getElementById('eventsGrid');
+                        const events = data.split('\n')
+                            .filter(line => line.trim() !== '')
+                            .filter(line => line.includes(':'));
+                        
+                        if (events.length === 0) {
+                            throw new Error('Нет данных событий');
+                        }
+                        
+                        eventsGrid.innerHTML = '';
+                        
+                        events.forEach(event => {
+                            const parts = event.split(':');
+                            const city = parts[0] || 'Город';
+                            const date = parts[1] || 'Дата';
+                            const place = parts[2] || 'Место';
+                            const ticketLink = parts[3] || '#';
+                            const vkLink = parts[4] || '#';
+                            
+                            const eventBlock = document.createElement('div');
+                            eventBlock.className = 'event-block';
+                            
+                            eventBlock.innerHTML = `
+                                <div class="event-city">${city.trim()}</div>
+                                <div class="event-date">${date.trim()}</div>
+                                <div class="event-place">${place.trim()}</div>
+                                <div class="buttons">
+                                    <a href="${ticketLink}" target="_blank" class="btn btn-tickets">Билеты</a>
+                                    <a href="${vkLink}" target="_blank" class="btn btn-vk">
+                                        <img src="vk-logo.png" alt="VK" class="vk-logo">
+                                        VK
+                                    </a>
+                                </div>
+                            `;
+                            
+                            eventsGrid.appendChild(eventBlock);
+                        });
+                        
+                    } catch (error) {
+                        console.error('Ошибка обработки данных:', error);
+                        showError();
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка загрузки файла:', error);
+                    showError();
+                });
+                
+            function showError() {
+                const eventsGrid = document.getElementById('eventsGrid');
+                eventsGrid.innerHTML = `
+                    <div class="event-block">
+                        <div class="event-city">Ошибка загрузки</div>
+                        <div class="event-date">Не удалось загрузить данные событий</div>
+                        <div class="event-place">Проверьте наличие файла infopad.txt</div>
+                        <div class="buttons">
+                            <a href="#" class="btn btn-tickets">Билеты</a>
+                            <a href="#" class="btn btn-vk">
+                                <img src="vk-logo.png" alt="VK" class="vk-logo">
+                                VK
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
