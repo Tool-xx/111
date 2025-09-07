@@ -1,3 +1,5 @@
+Город;Дата;Место;ссылка_билеты;ссылка_vk
 Москва;19 июля;Pipl Bar;https://test.ru;https://vk.com/test
 Санкт-Петербург;25 июля;MOD Club;https://tickets.ru;https://vk.com/modclub
 Казань;30 июля;Club X;https://clubx.ru;https://vk.com/clubx
+
