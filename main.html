@@ -14,9 +14,9 @@
       --vk-hover: #5a86b8;
       --text-color: #fff;
       --text-secondary: #ccc;
-      --border-radius: 16px;
+      --border-radius: 20px;
       --transition: all 0.3s ease;
-      --shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
       --card-bg: rgba(40, 40, 40, 0.95);
     }
 
@@ -29,68 +29,45 @@
     body {
       color: var(--text-color);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+      background: linear-gradient(135deg, #0c0c14 0%, #1a1a2e 50%, #16213e 100%);
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-      line-height: 1.6;
-      padding: 0 10px;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    }
-
-    /* === Фоновый слой с блюром === */
-    .background-blur {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('https://images.unsplash.com/photo-1501281667305-0d4e4b5b0b56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center;
-      background-size: cover;
-      filter: blur(12px);
-      z-index: -2;
-      opacity: 0.7;
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: -1;
     }
 
     /* === Баннер === */
     .banner {
-      margin: 20px auto;
+      width: 100%;
+      margin: 20px 0;
       display: flex;
       justify-content: center;
-      max-width: 100%;
-      width: 100%;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
     .banner img {
-      max-width: 100%;
-      height: auto;
+      width: 100%;
       max-height: 400px;
-      border-radius: var(--border-radius);
-      display: block;
       object-fit: cover;
-      box-shadow: var(--shadow);
-      border: 2px solid rgba(255, 255, 255, 0.1);
+      display: block;
     }
 
     /* === Основное содержимое === */
     .main-content {
       width: 100%;
-      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      max-width: 1200px;
     }
 
     /* Заголовок секции */
@@ -98,10 +75,10 @@
       margin: 20px 0;
       text-align: center;
       font-size: 2.5rem;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
       color: #fff;
       position: relative;
       padding-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     .section-title::after {
@@ -177,7 +154,7 @@
       grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
       gap: 25px;
       width: 100%;
-      margin: 20px auto 40px;
+      margin: 20px 0 40px;
     }
 
     .event {
@@ -309,6 +286,7 @@
       text-align: center;
       width: 100%;
       background: rgba(0, 0, 0, 0.5);
+      border-radius: var(--border-radius);
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -351,7 +329,7 @@
     /* Адаптивность */
     @media (max-width: 768px) {
       .banner {
-        margin: 15px auto;
+        margin: 15px 0;
       }
       
       .events {
@@ -388,6 +366,10 @@
     }
 
     @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+      
       .event h2 {
         font-size: 1.4rem;
       }
@@ -419,49 +401,48 @@
   </style>
 </head>
 <body>
-  <div class="background-blur"></div>
-  <div class="overlay"></div>
+  <div class="container">
+    <!-- Баннер -->
+    <header class="banner">
+      <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Концертный баннер" loading="eager">
+    </header>
 
-  <!-- Баннер -->
-  <header class="banner">
-    <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Концертный баннер" loading="eager">
-  </header>
+    <!-- Основное содержимое -->
+    <main class="main-content">
+      <h1 class="section-title">Ближайшие мероприятия</h1>
+      
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">
+          <i class="fas fa-globe"></i> Все
+        </button>
+        <button class="filter-btn" data-filter="Санкт-Петербург">
+          <i class="fas fa-landmark"></i> СПб
+        </button>
+        <button class="filter-btn" data-filter="Москва">
+          <i class="fas fa-building"></i> Москва
+        </button>
+        <button class="filter-btn" data-filter="Онлайн">
+          <i class="fas fa-laptop"></i> Онлайн
+        </button>
+      </div>
+      
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div>Загрузка мероприятий...</div>
+      </div>
+      
+      <!-- Контейнер для событий -->
+      <section class="events" id="events-container" aria-live="polite"></section>
+    </main>
 
-  <!-- Основное содержимое -->
-  <main class="main-content">
-    <h1 class="section-title">Ближайшие мероприятия</h1>
-    
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">
-        <i class="fas fa-globe"></i> Все
-      </button>
-      <button class="filter-btn" data-filter="Санкт-Петербург">
-        <i class="fas fa-landmark"></i> СПб
-      </button>
-      <button class="filter-btn" data-filter="Москва">
-        <i class="fas fa-building"></i> Москва
-      </button>
-      <button class="filter-btn" data-filter="Онлайн">
-        <i class="fas fa-laptop"></i> Онлайн
-      </button>
-    </div>
-    
-    <div class="loading" id="loading">
-      <div class="spinner"></div>
-      <div>Загрузка мероприятий...</div>
-    </div>
-    
-    <!-- Контейнер для событий -->
-    <section class="events" id="events-container" aria-live="polite"></section>
-  </main>
-
-  <!-- Подвал -->
-  <footer>
-    <a href="https://t.me/bboking812" target="_blank" rel="noopener noreferrer">
-      <img src="https://via.placeholder.com/90x90/4c75a3/fff?text=812booking" alt="812booking" loading="lazy">
-    </a>
-    <div class="footer-text">© 2023 Афиша мероприятий. Все права защищены.</div>
-  </footer>
+    <!-- Подвал -->
+    <footer>
+      <a href="https://t.me/bboking812" target="_blank" rel="noopener noreferrer">
+        <img src="https://via.placeholder.com/90x90/4c75a3/fff?text=812booking" alt="812booking" loading="lazy">
+      </a>
+      <div class="footer-text">© 2023 Афиша мероприятий. Все права защищены.</div>
+    </footer>
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
