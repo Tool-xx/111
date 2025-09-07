@@ -109,12 +109,14 @@
   <script>
     async function loadEvents() {
       try {
-        // Загружаем txt из репозитория (лежит в той же папке, что и HTML)
-        const response = await fetch('infopad.txt');
+        // Загружаем "сырой" txt из GitHub
+        const response = await fetch('https://raw.githubusercontent.com/Tool-xx/111/main/infopad.txt');
         if (!response.ok) throw new Error("Не удалось загрузить infopad.txt");
 
         const text = await response.text();
         const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+
+        if (!lines.length) throw new Error("Нет данных событий");
 
         const container = document.getElementById('events-container');
 
@@ -137,7 +139,7 @@
           }
         });
       } catch (e) {
-        console.error(e);
+        console.error("Ошибка обработки данных:", e);
         document.getElementById('events-container').innerHTML =
           "<p style='color:#ccc;text-align:center'>Ошибка загрузки данных</p>";
       }
