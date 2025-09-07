@@ -8,7 +8,9 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: linear-gradient(135deg, #0c0c0c, #1a1a1a, #000000);
+      /* фон теперь картинка */
+      background: url('background.png') no-repeat center center fixed;
+      background-size: cover; /* растягиваем на весь экран */
       color: #fff;
       font-family: Arial, sans-serif;
       display: flex;
@@ -24,8 +26,8 @@
       justify-content: center;
     }
     .banner img {
-      width: 859px;   /* фиксируем оригинальную ширину */
-      height: 599px;  /* фиксируем оригинальную высоту */
+      width: 859px;   /* фиксированная ширина баннера */
+      height: 599px;  /* фиксированная высота баннера */
       border-radius: 16px;
       display: block;
     }
@@ -40,7 +42,7 @@
     }
 
     .event {
-      background: #1a1a1a;
+      background: rgba(26,26,26,0.85); /* прозрачный фон, чтобы фон был виден */
       border-radius: 16px;
       padding: 20px;
       text-align: center;
@@ -117,7 +119,6 @@
   <script>
     async function loadEvents() {
       try {
-        // Загружаем "сырой" txt из GitHub
         const response = await fetch('https://raw.githubusercontent.com/Tool-xx/111/main/infopad.txt');
         if (!response.ok) throw new Error("Не удалось загрузить infopad.txt");
 
