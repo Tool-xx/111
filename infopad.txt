@@ -1,6 +1,3 @@
-Москва:19 июля:Pipl Bar
-Санкт-Петербург:25 июля:Ленинград Центр
-Казань:30 июля:Pyramida Club
-Екатеринбург:5 августа:Tele-Club
-Новосибирск:12 августа:Rock City
-Краснодар:18 августа:Hall
+Москва;19 июля;Pipl Bar;https://test.ru;https://vk.com/test
+Санкт-Петербург;25 июля;MOD Club;https://tickets.ru;https://vk.com/modclub
+Казань;30 июля;Club X;https://clubx.ru;https://vk.com/clubx
