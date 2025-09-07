@@ -19,18 +19,15 @@
 
     /* === Баннер === */
     .banner {
-      width: 100%;
-      max-width: 859px; /* исходная ширина баннера */
       margin: 15px auto;
       display: flex;
       justify-content: center;
     }
     .banner img {
-      width: 100%;
-      height: auto;
-      max-height: 30vh;   /* максимум 30% от высоты экрана */
-      object-fit: contain; /* показываем баннер полностью */
+      width: 859px;   /* оригинальная ширина */
+      height: auto;   /* пропорции сохраняются */
       border-radius: 16px;
+      display: block;
     }
 
     /* === Сетка мероприятий === */
