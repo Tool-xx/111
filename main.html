@@ -20,10 +20,12 @@
     .banner {
       width: 100%;
       max-width: 1000px;
-      margin: 20px auto;
+      margin: 15px auto;
     }
     .banner img {
       width: 100%;
+      max-height: 250px; /* ограничиваем высоту */
+      object-fit: cover;
       border-radius: 16px;
     }
 
@@ -32,7 +34,7 @@
       grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
       gap: 20px;
       max-width: 1000px;
-      margin: 30px auto;
+      margin: 20px auto 40px auto;
     }
 
     .event {
@@ -121,7 +123,7 @@
         const container = document.getElementById('events-container');
 
         lines.forEach(line => {
-          const [city, date, place] = line.split(':');
+          const [city, date, place, tickets, vk] = line.split(';');
           if (city && date && place) {
             const block = document.createElement('div');
             block.classList.add('event');
@@ -131,8 +133,8 @@
               <p>${date}</p>
               <p>${place}</p>
               <div class="buttons">
-                <a href="https://test.ru" target="_blank" class="btn btn-tickets">Билеты</a>
-                <a href="https://test.ru" target="_blank" class="btn btn-vk">VK</a>
+                <a href="${tickets || '#'}" target="_blank" class="btn btn-tickets">Билеты</a>
+                <a href="${vk || '#'}" target="_blank" class="btn btn-vk">VK</a>
               </div>
             `;
             container.appendChild(block);
