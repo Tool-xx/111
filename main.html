@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Афиша мероприятий</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: linear-gradient(135deg, #0c0c0c, #1a1a1a, #000000);
@@ -26,7 +22,6 @@
       max-width: 1000px;
       margin: 20px auto;
     }
-
     .banner img {
       width: 100%;
       border-radius: 16px;
@@ -48,21 +43,10 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
       transition: transform 0.3s ease;
     }
+    .event:hover { transform: translateY(-5px); }
 
-    .event:hover {
-      transform: translateY(-5px);
-    }
-
-    .event h2 {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-
-    .event p {
-      margin: 5px 0;
-      font-size: 16px;
-      color: #ccc;
-    }
+    .event h2 { font-size: 22px; margin-bottom: 10px; }
+    .event p { margin: 5px 0; font-size: 16px; color: #ccc; }
 
     .buttons {
       margin-top: 15px;
@@ -70,7 +54,6 @@
       justify-content: center;
       gap: 12px;
     }
-
     .btn {
       padding: 10px 16px;
       border: none;
@@ -81,16 +64,11 @@
       font-size: 14px;
       transition: background 0.3s ease;
     }
-
     .btn-tickets {
       background: #e63946;
       color: #fff;
     }
-
-    .btn-tickets:hover {
-      background: #ff4d5a;
-    }
-
+    .btn-tickets:hover { background: #ff4d5a; }
     .btn-vk {
       background: #4c75a3;
       color: #fff;
@@ -99,25 +77,18 @@
       justify-content: center;
       gap: 6px;
     }
-
-    .btn-vk:hover {
-      background: #5a86b8;
-    }
+    .btn-vk:hover { background: #5a86b8; }
 
     footer {
       margin-top: auto;
       padding: 20px;
     }
-
     footer a img {
       width: 80px;
       opacity: 0.8;
       transition: opacity 0.3s ease;
     }
-
-    footer a img:hover {
-      opacity: 1;
-    }
+    footer a img:hover { opacity: 1; }
   </style>
 </head>
 <body>
@@ -126,7 +97,7 @@
   </div>
 
   <div class="events" id="events-container">
-    <!-- Сюда вставятся блоки из infopad.txt -->
+    <!-- сюда загрузятся данные из infopad.txt -->
   </div>
 
   <footer>
@@ -137,31 +108,39 @@
 
   <script>
     async function loadEvents() {
-      const response = await fetch('infopad.txt');
-      const text = await response.text();
-      const lines = text.split('\n').map(line => line.trim()).filter(line => line);
+      try {
+        // Загружаем txt из репозитория (лежит в той же папке, что и HTML)
+        const response = await fetch('infopad.txt');
+        if (!response.ok) throw new Error("Не удалось загрузить infopad.txt");
 
-      const container = document.getElementById('events-container');
+        const text = await response.text();
+        const lines = text.split('\n').map(l => l.trim()).filter(l => l);
 
-      lines.forEach(line => {
-        const [city, date, place] = line.split(':');
-        if (city && date && place) {
-          const block = document.createElement('div');
-          block.classList.add('event');
+        const container = document.getElementById('events-container');
 
-          block.innerHTML = `
-            <h2>${city}</h2>
-            <p>${date}</p>
-            <p>${place}</p>
-            <div class="buttons">
-              <a href="https://test.ru" target="_blank" class="btn btn-tickets">Билеты</a>
-              <a href="https://test.ru" target="_blank" class="btn btn-vk">VK</a>
-            </div>
-          `;
+        lines.forEach(line => {
+          const [city, date, place] = line.split(':');
+          if (city && date && place) {
+            const block = document.createElement('div');
+            block.classList.add('event');
 
-          container.appendChild(block);
-        }
-      });
+            block.innerHTML = `
+              <h2>${city}</h2>
+              <p>${date}</p>
+              <p>${place}</p>
+              <div class="buttons">
+                <a href="https://test.ru" target="_blank" class="btn btn-tickets">Билеты</a>
+                <a href="https://test.ru" target="_blank" class="btn btn-vk">VK</a>
+              </div>
+            `;
+            container.appendChild(block);
+          }
+        });
+      } catch (e) {
+        console.error(e);
+        document.getElementById('events-container').innerHTML =
+          "<p style='color:#ccc;text-align:center'>Ошибка загрузки данных</p>";
+      }
     }
 
     loadEvents();
